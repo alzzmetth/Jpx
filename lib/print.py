@@ -1,38 +1,36 @@
 """
 JPX Print Module
-Menyediakan fungsi printing tambahan.
+Fungsi print biasa + akses ke typewriter interpreter
 """
 
-# Import color jika tersedia (opsional)
-try:
-    from .color import Colors
-except ImportError:
-    # Fallback jika color tidak ada
-    class Colors:
-        RESET = ''
-        RED = ''
-        GREEN = ''
-        BLUE = ''
-        # dll dummy
+def normal(interp, text):
+    """Print biasa"""
+    # Bisa panggil print Python langsung
+    print(text)
 
-def print_color(text, color_code):
-    """
-    Mencetak teks dengan warna tertentu.
-    
-    Args:
-        text (str): Teks yang akan dicetak.
-        color_code (str): Kode ANSI warna (misal Colors.RED).
-    """
-    print(f"{color_code}{text}{Colors.RESET}")
+def slow(interp, text):
+    """Print dengan typewriter lambat"""
+    # Panggil typewriter dari interpreter dengan speed kustom
+    interp.typewriter(text, speed=0.1)
 
-def print_box(text, width=40):
-    """
-    Mencetak teks dalam kotak.
-    """
-    line = "┌" + "─" * (width - 2) + "┐"
-    print(line)
-    print(f"│ {text:<{width-4}} │")
-    line = "└" + "─" * (width - 2) + "┘"
-    print(line)
+def fast(interp, text):
+    """Print dengan typewriter cepat"""
+    interp.typewriter(text, speed=0.02)
 
-# Fungsi lain bisa ditambahkan sesuai kebutuhan
+def with_color(interp, text, color):
+    """Print dengan warna (color dari color module)"""
+    # color bisa diakses dari interp.modules['color']
+    colors = interp.modules.get('color', {})
+    color_code = colors.get(color, '')
+    reset = colors.get('RESET', '')
+    print(f"{color_code}{text}{reset}")
+
+def __init__(interp):
+    """Inisialisasi module print"""
+    interp.modules['print'] = {
+        'normal': normal,
+        'slow': slow,
+        'fast': fast,
+        'with_color': with_color,
+    }
+    return interp.modules['print']
