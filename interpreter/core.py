@@ -9,7 +9,9 @@ import time
 import importlib.util
 from .errors import ErrorHandler, JPXError
 from .parser import Parser, EvalParser
-from .modules import GlobalModule, IfElseModule
+# Di bagian atas, ganti import modules
+from .modules.global_mod import GlobalModule
+from .modules.if_else import IfElseModule
 
 class JPXInterpreter:
     """Main JPX Interpreter class."""
