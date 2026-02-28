@@ -1,7 +1,8 @@
-"""
-JPX Interpreter Package
-"""
-from .core import JPXInterpreter
-from .errors import JPXError, JPXSyntaxError, JPXRuntimeError, JPXModuleError
 
-__all__ = ['JPXInterpreter', 'JPXError', 'JPXSyntaxError', 'JPXRuntimeError', 'JPXModuleError']
+"""
+JPX Modules Package
+"""
+from .global_mod import GlobalModule
+from .if_else import IfElseModule
+
+__all__ = ['GlobalModule', 'IfElseModule']
